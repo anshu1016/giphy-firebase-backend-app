@@ -14,17 +14,13 @@ Welcome to the frontend of the Giphy Firebase App! This project is built with Re
 ## Routes
 
 - **Landing Page**: [https://giphy-firebase-frontend-app.vercel.app/](https://giphy-firebase-frontend-app.vercel.app/)
-  ![Landing Page](<img width="959" alt="image" src="https://github.com/user-attachments/assets/d4d0f6a9-84b5-4aa1-a950-e55be1c8324a">
-)
+  ![Landing Page](https://github.com/user-attachments/assets/d4d0f6a9-84b5-4aa1-a950-e55be1c8324a)
 - **Sign In**: [https://giphy-firebase-frontend-app.vercel.app/signin](https://giphy-firebase-frontend-app.vercel.app/signin)
-  ![Sign In Page](<img width="959" alt="image" src="https://github.com/user-attachments/assets/828b2268-7737-4d2c-9ad2-feb8973a1588">
-)
+  ![Sign In Page](https://github.com/user-attachments/assets/828b2268-7737-4d2c-9ad2-feb8973a1588)
 - **Sign Up**: [https://giphy-firebase-frontend-app.vercel.app/signup](https://giphy-firebase-frontend-app.vercel.app/signup)
-  ![Sign Up Page](<img width="959" alt="image" src="https://github.com/user-attachments/assets/b2a617ba-9864-47f7-ae0f-e593fa298da1">
-)
+  ![Sign Up Page](https://github.com/user-attachments/assets/b2a617ba-9864-47f7-ae0f-e593fa298da1)
 - **Bookmarks**: [https://giphy-firebase-frontend-app.vercel.app/bookmarkss](https://giphy-firebase-frontend-app.vercel.app/bookmarkss)
-  ![Bookmarks Page](<img width="959" alt="image" src="https://github.com/user-attachments/assets/6f9a6dc7-620a-4842-b65f-37e4cf1d7b65">
-)
+  ![Bookmarks Page](https://github.com/user-attachments/assets/6f9a6dc7-620a-4842-b65f-37e4cf1d7b65)
 
 ## Installation
 
