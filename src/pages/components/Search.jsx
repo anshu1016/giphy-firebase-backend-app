@@ -36,7 +36,8 @@ const Search = () => {
       const data = response.data.data;
       setGifs(data);
     } catch (err) {
-      console.log("ERROR IN FETCHING GIFS", err);
+      console.error("Error fetching GIFs:", err);
+      // Optional: Show a user-friendly error message
     } finally {
       setLoading(false);
     }
@@ -59,14 +60,17 @@ const Search = () => {
           value={word}
           onChange={handleInput}
           placeholder="Search for GIFs..."
+          aria-label="Search for GIFs"
         />
         <div className="flex space-x-4 relative">
-          <Link to="/bookmarkss">
+          <Link to="/bookmarkss" aria-label="Go to bookmarks">
             <FaHeart className="text-xl cursor-pointer text-red-500 hover:text-red-700" />
           </Link>
           <div className="relative group">
-            <FaUserCircle className="text-xl cursor-pointer text-gray-700 hover:text-gray-900" />
-            {/* Profile Hover Box */}
+            <FaUserCircle
+              className="text-xl cursor-pointer text-gray-700 hover:text-gray-900"
+              aria-label="User profile"
+            />
             {user && (
               <div className="absolute right-0 hidden group-hover:block bg-white text-black p-4 rounded-lg shadow-lg">
                 <p className="text-sm font-bold">{user.name}</p>
@@ -77,6 +81,7 @@ const Search = () => {
           <FaSignOutAlt
             className="text-xl cursor-pointer text-gray-700 hover:text-gray-900"
             onClick={logout}
+            aria-label="Log out"
           />
         </div>
       </header>
@@ -104,6 +109,11 @@ const Search = () => {
                       isBookmarked(gif.id)
                         ? removeBookmark(gif.id)
                         : addBookmark(gif.id)
+                    }
+                    aria-label={
+                      isBookmarked(gif.id)
+                        ? "Remove from bookmarks"
+                        : "Add to bookmarks"
                     }
                   />
                 </div>

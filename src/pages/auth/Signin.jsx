@@ -1,16 +1,17 @@
 import { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; // Import useAuth for login
-
-const API_URL_SIGNIN = "http://localhost:8080/signin";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import app from "../../firebase";
 
 const SignIn = () => {
-  const { login } = useAuth(); // Access login function from AuthContext
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const auth = getAuth(app); // Initialize Firebase Authentication
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePassChange = (e) => setPassword(e.target.value);
@@ -20,17 +21,29 @@ const SignIn = () => {
     if (email && password) {
       setLoading(true);
       try {
-        const response = await axios.post(API_URL_SIGNIN, { email, password });
-        const { token, uid, name } = response.data;
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
 
-        // Login the user and store token
-        login({ uid, email, name, token });
+        // Use the user's ID token for authentication
+        const token = await user.getIdToken();
+
+        login({
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName || "Anonymous",
+          token,
+        });
 
         setEmail("");
         setPassword("");
         setError("");
+        navigate("/"); // Redirect to home or another page
       } catch (err) {
-        setError(err.response?.data || "Something went wrong");
+        setError(err.message || "Something went wrong");
       } finally {
         setLoading(false);
       }

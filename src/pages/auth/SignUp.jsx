@@ -1,9 +1,9 @@
+// SignUp.js
 import { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
-const API_URL_SIGNUP = "http://localhost:8080/signup";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import app from "../../firebase";
 
 const SignUp = () => {
   const { login } = useAuth();
@@ -13,6 +13,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+  const auth = getAuth(app); // Initialize Firebase Authentication
 
   const handleNameChange = (e) => setName(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
@@ -23,24 +25,32 @@ const SignUp = () => {
     if (name && email && password) {
       setLoading(true);
       try {
-        const response = await axios.post(API_URL_SIGNUP, {
-          name,
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
           email,
-          password,
+          password
+        );
+        const user = userCredential.user;
+
+        // Get the ID token
+        const token = await user.getIdToken();
+
+        // Pass user data to the login function from context
+        login({
+          uid: user.uid,
+          email: user.email,
+          name: name, // Use the name provided by the user
+          token,
         });
-
-        const { uid, token, name: userName } = response.data;
-
-        login({ uid, email, name: userName, token });
 
         setSuccess("User Signed Up Successfully!");
         setName("");
         setEmail("");
         setPassword("");
         setError("");
+        navigate("/"); // Redirect to home or another page
       } catch (err) {
-        console.error("Error during sign up:", err);
-        setError(err.response?.data || "Something went wrong");
+        setError(err.message || "Something went wrong");
         setSuccess("");
       } finally {
         setLoading(false);
